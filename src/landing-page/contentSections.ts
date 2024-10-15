@@ -1,6 +1,7 @@
 import { DocsUrl, BlogUrl } from '../shared/common';
-import daBoiAvatar from '../client/static/da-boi.png';
+import leetCoder from '../client/static/leetcoder.png';
 import avatarPlaceholder from '../client/static/avatar-placeholder.png';
+import founder from '../client/static/founder.png';
 import { routes } from 'wasp/client/router';
 
 export const navigation = [
@@ -37,25 +38,25 @@ export const features = [
 ];
 export const testimonials = [
   {
-    name: 'Da Boi',
-    role: 'Wasp Mascot',
-    avatarSrc: daBoiAvatar,
+    name: 'Joe User',
+    role: 'Regular User',
+    avatarSrc: avatarPlaceholder,
     socialUrl: 'https://twitter.com/wasplang',
-    quote: "I don't even know how to code. I'm just a plushie.",
+    quote: '"I dont even know how to code. It just works!"',
   },
   {
     name: 'Mr. Foobar',
     role: 'Founder @ Cool Startup',
-    avatarSrc: avatarPlaceholder,
+    avatarSrc: founder,
     socialUrl: '',
-    quote: 'This product makes me cooler than I already am.',
+    quote: '"This product makes me cooler than I already am."',
   },
   {
-    name: 'Jamie',
-    role: 'Happy Customer',
-    avatarSrc: avatarPlaceholder,
+    name: '0x1337C0DERFF0',
+    role: 'Leet Coder',
+    avatarSrc: leetCoder,
     socialUrl: '#',
-    quote: 'My cats love it!',
+    quote: '"I miss pushing random bytes into transactions :/"',
   },
 ];
 
