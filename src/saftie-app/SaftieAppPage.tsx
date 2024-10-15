@@ -15,18 +15,18 @@ import { TiDelete } from 'react-icons/ti';
 import type { GeneratedSchedule, MainTask, SubTask } from './schedule';
 import { cn } from '../client/cn';
 
-export default function DemoAppPage() {
+export default function SaftieAppPage() {
   return (
     <div className='py-10 lg:mt-10'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
         <div className='mx-auto max-w-4xl text-center'>
           <h2 className='mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-white'>
-            <span className='text-yellow-500'>AI</span> Day Scheduler
+            <span className='text-yellow-500'>Saftie</span> Manager
           </h2>
         </div>
         <p className='mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600 dark:text-white'>
-          This example app uses OpenAI's chat completions with function calling to return a structured JSON object. Try
-          it out, enter your day's tasks, and let AI do the rest!
+          Create/Delete your Safties below. Each Saftie will need a destination Solana address and an amount in 
+          USDC; with that, you'll get a Solana Blink that you can share with your donors on the Internet!
         </p>
         {/* begin AI-powered Todo List */}
         <div className='my-8 border rounded-3xl border-gray-900/10 dark:border-gray-100/10'>

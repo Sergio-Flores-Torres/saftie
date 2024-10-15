@@ -145,40 +145,40 @@ action updateUserById {
 }
 //#endregion
 
-//#region Demo AI App
-route DemoAppRoute { path: "/demo-app", to: DemoAppPage }
-page DemoAppPage {
+//#region Saftie App
+route SaftieAppRoute { path: "/saftie-app", to: SaftieAppPage }
+page SaftieAppPage {
   authRequired: true,
-  component: import DemoAppPage from "@src/demo-ai-app/DemoAppPage"
+  component: import SaftieAppPage from "@src/saftie-app/SaftieAppPage"
 }
 
 action generateGptResponse {
-  fn: import { generateGptResponse } from "@src/demo-ai-app/operations",
+  fn: import { generateGptResponse } from "@src/saftie-app/operations",
   entities: [User, Task, GptResponse]
 }
 
 action createTask {
-  fn: import { createTask } from "@src/demo-ai-app/operations",
+  fn: import { createTask } from "@src/saftie-app/operations",
   entities: [Task]
 }
 
 action deleteTask {
-  fn: import { deleteTask } from "@src/demo-ai-app/operations",
+  fn: import { deleteTask } from "@src/saftie-app/operations",
   entities: [Task]
 }
 
 action updateTask {
-  fn: import { updateTask } from "@src/demo-ai-app/operations",
+  fn: import { updateTask } from "@src/saftie-app/operations",
   entities: [Task]
 }
 
 query getGptResponses {
-  fn: import { getGptResponses } from "@src/demo-ai-app/operations",
+  fn: import { getGptResponses } from "@src/saftie-app/operations",
   entities: [User, GptResponse]
 }
 
 query getAllTasksByUser {
-  fn: import { getAllTasksByUser } from "@src/demo-ai-app/operations",
+  fn: import { getAllTasksByUser } from "@src/saftie-app/operations",
   entities: [Task]
 }
 //#endregion

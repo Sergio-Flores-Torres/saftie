@@ -13,26 +13,26 @@ export const navigation = [
 export const features = [
   {
     name: 'Cool Feature #1',
-    description: 'Describe your cool feature here.',
-    icon: '🤝',
+    description: 'Create Solana Blinks pre-configured to receive USDC donations on your wallet.',
+    icon: '💰​',
     href: DocsUrl,
   },
   {
     name: 'Cool Feature #2',
-    description: 'Describe your cool feature here.',
-    icon: '🔐',
+    description: 'Reduce friction for your donors, by saving them from typing amounts and addresses.',
+    icon: '🌟​',
     href: DocsUrl,
   },
   {
     name: 'Cool Feature #3',
-    description: 'Describe your cool feature here.',
-    icon: '🥞',
+    description: 'Your donors transact directly from their wallet, to yours.',
+    icon: '✅​',
     href: DocsUrl,
   },
   {
     name: 'Cool Feature #4',
-    description: 'Describe your cool feature here.',
-    icon: '💸',
+    description: 'You can manage your Solana USDC donation links in one place.',
+    icon: '📊​',
     href: DocsUrl,
   },
 ];
@@ -42,7 +42,7 @@ export const testimonials = [
     role: 'Regular User',
     avatarSrc: avatarPlaceholder,
     socialUrl: 'https://twitter.com/wasplang',
-    quote: '"I dont even know how to code. It just works!"',
+    quote: '"Code? What is that? It just works!"',
   },
   {
     name: 'Mr. Foobar',
@@ -56,7 +56,7 @@ export const testimonials = [
     role: 'Leet Coder',
     avatarSrc: leetCoder,
     socialUrl: '#',
-    quote: '"I miss pushing random bytes into transactions :/"',
+    quote: '"Yeah, well, I miss assembling transaction bytes :/"',
   },
 ];
 
