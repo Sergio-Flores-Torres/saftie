@@ -62,7 +62,7 @@ app Saftie {
     },
     onAfterSignup: import { onAfterSignup } from "@src/auth/hooks",
     onAuthFailedRedirectTo: "/login",
-    onAuthSucceededRedirectTo: "/demo-app",
+    onAuthSucceededRedirectTo: "/saftie-app",
   },
 
   db: {
@@ -152,14 +152,14 @@ page SaftieAppPage {
   component: import SaftieAppPage from "@src/saftie-app/SaftieAppPage"
 }
 
+action createSaftie {
+  fn: import { createSaftie } from "@src/saftie-app/operations",
+  entities: [Saftie]
+}
+
 action generateGptResponse {
   fn: import { generateGptResponse } from "@src/saftie-app/operations",
   entities: [User, Task, GptResponse]
-}
-
-action createTask {
-  fn: import { createTask } from "@src/saftie-app/operations",
-  entities: [Task]
 }
 
 action deleteTask {

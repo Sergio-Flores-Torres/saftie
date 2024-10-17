@@ -1,12 +1,12 @@
-import { type Task } from 'wasp/entities';
+import { type Task, type Saftie } from 'wasp/entities';
 
 import {
   generateGptResponse,
   deleteTask,
   updateTask,
-  createTask,
   useQuery,
   getAllTasksByUser,
+  createSaftie,
 } from 'wasp/client/operations';
 
 import { useState, useMemo } from 'react';
@@ -30,8 +30,8 @@ export default function SaftieAppPage() {
         </p>
         {/* begin AI-powered Todo List */}
         <div className='my-8 border rounded-3xl border-gray-900/10 dark:border-gray-100/10'>
-          <div className='sm:w-[90%] md:w-[70%] lg:w-[50%] py-10 px-6 mx-auto my-8 space-y-10'>
-            <NewTaskForm handleCreateTask={createTask} />
+          <div className='sm:w-[90%] md:w-[70%] lg:w-[60%] py-10 px-6 mx-auto my-8 space-y-10'>
+            <NewSaftieForm handleCreateSaftie={createSaftie} />
           </div>
         </div>
         {/* end AI-powered Todo List */}
@@ -40,9 +40,11 @@ export default function SaftieAppPage() {
   );
 }
 
-function NewTaskForm({ handleCreateTask }: { handleCreateTask: typeof createTask }) {
-  const [description, setDescription] = useState<string>('');
-  const [todaysHours, setTodaysHours] = useState<string>('8');
+function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof createSaftie }) {
+  const [address, setAddress] = useState<string>('');
+  const [amount, setAmount] = useState<number>(0);
+  const [error, setError] = useState('');
+
   const [response, setResponse] = useState<GeneratedSchedule | null>({
     mainTasks: [
       {
@@ -112,9 +114,18 @@ function NewTaskForm({ handleCreateTask }: { handleCreateTask: typeof createTask
 
   const handleSubmit = async () => {
     try {
-      await handleCreateTask({ description });
-      setDescription('');
-    } catch (err: any) {
+		// Validate if the input is not empty
+		if (!address.trim()) {
+			throw(new Error('The address is required.'));
+		}
+		if (amount < 1 || amount > 100) {
+			throw(new Error('Amount between 1-100 USDC.'));
+		}
+
+		await handleCreateSaftie({ address, amount });
+		setAddress('');
+		setAmount(1);
+	} catch (err: any) {
       window.alert('Error: ' + (err.message || 'Something went wrong'));
     }
   };
@@ -123,7 +134,7 @@ function NewTaskForm({ handleCreateTask }: { handleCreateTask: typeof createTask
     try {
       setIsPlanGenerating(true);
       const response = await generateGptResponse({
-        hours: todaysHours,
+        hours: '8',
       });
       if (response) {
         setResponse(response);
@@ -139,25 +150,40 @@ function NewTaskForm({ handleCreateTask }: { handleCreateTask: typeof createTask
     <div className='flex flex-col justify-center gap-10'>
       <div className='flex flex-col gap-3'>
         <div className='flex items-center justify-between gap-3'>
+
+		<input
+            type='number'
+            id='amount'
+            className='min-w-[5rem] text-gray-800/90 text-center font-medium rounded-md border border-gray-200 bg-yellow-50 hover:bg-yellow-100 shadow-md focus:outline-none focus:border-transparent focus:shadow-none duration-200 ease-in-out hover:shadow-none'
+			step={1}
+			min={1}
+			max={100}
+            value={amount}
+            onChange={(e) => setAmount(parseFloat(e.currentTarget.value))}
+          />
+
           <input
             type='text'
-            id='description'
+            id='address'
             className='text-sm text-gray-600 w-full rounded-md border border-gray-200 bg-[#f5f0ff] shadow-md focus:outline-none focus:border-transparent focus:shadow-none duration-200 ease-in-out hover:shadow-none'
-            placeholder='Enter task description'
-            value={description}
-            onChange={(e) => setDescription(e.currentTarget.value)}
+            placeholder='Enter DESTINATION Solana Wallet'
+            value={address}
+            onChange={(e) => {
+				setAddress(e.currentTarget.value)
+			}}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 handleSubmit();
               }
             }}
           />
+
           <button
             type='button'
             onClick={handleSubmit}
             className='min-w-[7rem] font-medium text-gray-800/90 bg-yellow-50 shadow-md ring-1 ring-inset ring-slate-200 py-2 px-4 rounded-md hover:bg-yellow-100 duration-200 ease-in-out focus:outline-none focus:shadow-none hover:shadow-none'
           >
-            Add Task
+            Add Saftie
           </button>
         </div>
       </div>
@@ -181,8 +207,8 @@ function NewTaskForm({ handleCreateTask }: { handleCreateTask: typeof createTask
                   min={1}
                   max={24}
                   className='min-w-[7rem] text-gray-800/90 text-center font-medium rounded-md border border-gray-200 bg-yellow-50 hover:bg-yellow-100 shadow-md focus:outline-none focus:border-transparent focus:shadow-none duration-200 ease-in-out hover:shadow-none'
-                  value={todaysHours}
-                  onChange={(e) => setTodaysHours(e.currentTarget.value)}
+                  //value={todaysHours}
+                  //onChange={(e) => setTodaysHours(e.currentTarget.value)}
                 />
               </div>
             </div>

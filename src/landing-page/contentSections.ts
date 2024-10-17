@@ -41,7 +41,7 @@ export const testimonials = [
     name: 'Joe User',
     role: 'Regular User',
     avatarSrc: avatarPlaceholder,
-    socialUrl: 'https://twitter.com/wasplang',
+    socialUrl: '',
     quote: '"Code? What is that? It just works!"',
   },
   {
@@ -55,7 +55,7 @@ export const testimonials = [
     name: '0x1337C0DERFF0',
     role: 'Leet Coder',
     avatarSrc: leetCoder,
-    socialUrl: '#',
+    socialUrl: '',
     quote: '"Yeah, well, I miss assembling transaction bytes :/"',
   },
 ];
@@ -63,11 +63,20 @@ export const testimonials = [
 export const faqs = [
   {
     id: 1,
-    question: 'Whats the meaning of life?',
-    answer: '42.',
-    href: 'https://en.wikipedia.org/wiki/42_(number)',
+    question: 'Why do I need to register?',
+    answer: "Because, that way you can have a nice list of links to share, accesible via your email. We also would like to spam you in the future with relevant " +
+	"and timely news about our products and services. But just us, no 3rd parties allowed.",
+    href: '',
+  },
+  {
+    id: 2,
+    question: 'Do you store the addresses for good?',
+    answer: "No. If you delete a Saftie, it gets really deleted. Not that it's very useful info in any case, considering the transactions flow " + 
+	"directly from your wallet and can be looked up on chain ;)",
+    href: '',
   },
 ];
+
 export const footerNavigation = {
   app: [
     { name: 'Documentation', href: DocsUrl },

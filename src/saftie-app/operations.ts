@@ -1,11 +1,11 @@
-import type { Task, GptResponse } from 'wasp/entities';
+import type { Saftie, Task, GptResponse } from 'wasp/entities';
 import type {
   GenerateGptResponse,
-  CreateTask,
   DeleteTask,
   UpdateTask,
   GetGptResponses,
   GetAllTasksByUser,
+  CreateSaftie,
 } from 'wasp/server/operations';
 import { HttpError } from 'wasp/server';
 import { GeneratedSchedule } from './schedule';
@@ -181,19 +181,21 @@ export const generateGptResponse: GenerateGptResponse<GptPayload, GeneratedSched
   }
 };
 
-export const createTask: CreateTask<Pick<Task, 'description'>, Task> = async ({ description }, context) => {
-  if (!context.user) {
-    throw new HttpError(401);
-  }
 
-  const task = await context.entities.Task.create({
-    data: {
-      description,
-      user: { connect: { id: context.user.id } },
-    },
-  });
-
-  return task;
+export const createSaftie: CreateSaftie<Pick<Saftie, 'address' | 'amount'>, Saftie> = async ({ address, amount }, context) => {
+	if (!context.user) {
+	  throw new HttpError(401);
+	}
+  
+	const saftie = await context.entities.Saftie.create({
+	  data: {
+		address,
+		amount,
+		user: { connect: { id: context.user.id } },
+	  },
+	});
+  
+	return saftie;
 };
 
 export const updateTask: UpdateTask<Partial<Task>, Task> = async ({ id, isDone, time }, context) => {
