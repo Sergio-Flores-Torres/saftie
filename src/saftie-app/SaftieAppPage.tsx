@@ -2,20 +2,20 @@ import { type Task, type Saftie } from 'wasp/entities';
 
 import {
   generateGptResponse,
-  deleteTask,
-  updateTask,
+  deleteSaftie,
   useQuery,
-  getAllTasksByUser,
+  getAllSaftiesByUser,
   createSaftie,
 } from 'wasp/client/operations';
 
 import { useState, useMemo } from 'react';
 import { CgSpinner } from 'react-icons/cg';
-import { TiDelete } from 'react-icons/ti';
+import { TiDelete, TiClipboard } from 'react-icons/ti';
 import type { GeneratedSchedule, MainTask, SubTask } from './schedule';
 import { cn } from '../client/cn';
 
 export default function SaftieAppPage() {
+
   return (
     <div className='py-10 lg:mt-10'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
@@ -42,9 +42,10 @@ export default function SaftieAppPage() {
 
 function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof createSaftie }) {
   const [address, setAddress] = useState<string>('');
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(1);
   const [error, setError] = useState('');
 
+  /*
   const [response, setResponse] = useState<GeneratedSchedule | null>({
     mainTasks: [
       {
@@ -108,9 +109,11 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
       },
     ],
   });
+
+  */
   const [isPlanGenerating, setIsPlanGenerating] = useState<boolean>(false);
 
-  const { data: tasks, isLoading: isTasksLoading } = useQuery(getAllTasksByUser);
+  const { data: safties, isLoading: isSaftiesLoading } = useQuery(getAllSaftiesByUser);
 
   const handleSubmit = async () => {
     try {
@@ -126,10 +129,11 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
 		setAddress('');
 		setAmount(1);
 	} catch (err: any) {
-      window.alert('Error: ' + (err.message || 'Something went wrong'));
-    }
+		setError((err.message || 'Something went wrong'));
+     }
   };
 
+  /*
   const handleGeneratePlan = async () => {
     try {
       setIsPlanGenerating(true);
@@ -145,11 +149,13 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
       setIsPlanGenerating(false);
     }
   };
+*/
 
   return (
     <div className='flex flex-col justify-center gap-10'>
       <div className='flex flex-col gap-3'>
-        <div className='flex items-center justify-between gap-3'>
+	  {error &&  <p className='mx-auto mt-6 max-w-2xl text-center text-md leading-8 text-red-600 dark:text-white'>{error}</p>}
+	  <div className='flex items-center justify-between gap-3'>
 
 		<input
             type='number'
@@ -189,38 +195,22 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
       </div>
 
       <div className='space-y-10 col-span-full'>
-        {isTasksLoading && <div>Loading...</div>}
-        {tasks!! && tasks.length > 0 ? (
+        {isSaftiesLoading && <div>Loading...</div>}
+        {safties!! && safties.length > 0 ? (
           <div className='space-y-4'>
-            {tasks.map((task: Task) => (
-              <Todo key={task.id} id={task.id} isDone={task.isDone} description={task.description} time={task.time} />
+            {safties.map((saftie: Saftie) => (
+              <SaftieList key={saftie.id} id={saftie.id} address={saftie.address} amount={saftie.amount} />
             ))}
-            <div className='flex flex-col gap-3'>
-              <div className='flex items-center justify-between gap-3'>
-                <label htmlFor='time' className='text-sm text-gray-600 dark:text-gray-300 text-nowrap font-semibold'>
-                  How many hours will you work today?
-                </label>
-                <input
-                  type='number'
-                  id='time'
-                  step={0.5}
-                  min={1}
-                  max={24}
-                  className='min-w-[7rem] text-gray-800/90 text-center font-medium rounded-md border border-gray-200 bg-yellow-50 hover:bg-yellow-100 shadow-md focus:outline-none focus:border-transparent focus:shadow-none duration-200 ease-in-out hover:shadow-none'
-                  //value={todaysHours}
-                  //onChange={(e) => setTodaysHours(e.currentTarget.value)}
-                />
-              </div>
-            </div>
           </div>
         ) : (
-          <div className='text-gray-600 text-center'>Add tasks to begin</div>
+          <div className='text-gray-600 text-center'>Add Safties to begin</div>
         )}
       </div>
 
+{/*
       <button
         type='button'
-        disabled={isPlanGenerating || tasks?.length === 0}
+        disabled={isPlanGenerating || safties?.length === 0}
         onClick={() => handleGeneratePlan()}
         className='flex items-center justify-center min-w-[7rem] font-medium text-gray-800/90 bg-yellow-50 shadow-md ring-1 ring-inset ring-slate-200 py-2 px-4 rounded-md hover:bg-yellow-100 duration-200 ease-in-out focus:outline-none focus:shadow-none hover:shadow-none disabled:opacity-70 disabled:cursor-not-allowed'
       >
@@ -241,75 +231,44 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
           <TaskTable schedule={response} />
         </div>
       )}
+*/}
     </div>
   );
 }
 
-type TodoProps = Pick<Task, 'id' | 'isDone' | 'description' | 'time'>;
+type SaftieListProps = Pick<Saftie, 'id' | 'address' | 'amount'>;
 
-function Todo({ id, isDone, description, time }: TodoProps) {
-  const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await updateTask({
-      id,
-      isDone: e.currentTarget.checked,
-    });
-  };
+function SaftieList({ id, address, amount }: SaftieListProps) {
 
-  const handleTimeChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await updateTask({
-      id,
-      time: e.currentTarget.value,
-    });
-  };
 
   const handleDeleteClick = async () => {
-    await deleteTask({ id });
+    await deleteSaftie({ id });
   };
 
   return (
     <div className='flex items-center justify-between bg-purple-50 rounded-lg border border-gray-200 p-2 w-full'>
+	<div className='flex items-center justify-start w-15'>
+        <button className='p-1' onClick={handleDeleteClick} title='Copy Saftie Link'>
+          <TiClipboard size='20' className='text-blue-600 hover:text-blue-700' />
+        </button>
+      </div>
       <div className='flex items-center justify-between gap-5 w-full'>
         <div className='flex items-center gap-3'>
-          <input
-            type='checkbox'
-            className='ml-1 form-checkbox bg-purple-300 checked:bg-purple-300 rounded border-purple-400 duration-200 ease-in-out hover:bg-purple-400 hover:checked:bg-purple-600 focus:ring focus:ring-purple-300 focus:checked:bg-purple-400 focus:ring-opacity-50 text-black'
-            checked={isDone}
-            onChange={handleCheckboxChange}
-          />
+
           <span
-            className={cn('text-slate-600', {
-              'line-through text-slate-500': isDone,
-            })}
-          >
-            {description}
+            className='text-slate-600'>
+            {address}
           </span>
         </div>
         <div className='flex items-center gap-2'>
-          <input
-            id='time'
-            type='number'
-            min={0.5}
-            step={0.5}
-            className={cn(
-              'w-18 h-8 text-center text-slate-600 text-xs rounded border border-gray-200 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-purple-300 focus:ring-opacity-50',
-              {
-                'pointer-events-none opacity-50': isDone,
-              }
-            )}
-            value={time}
-            onChange={handleTimeChange}
-          />
-          <span
-            className={cn('italic text-slate-600 text-xs', {
-              'text-slate-500': isDone,
-            })}
-          >
-            hrs
+		<span
+            className='text-slate-600'>
+            {amount} usdc
           </span>
         </div>
       </div>
       <div className='flex items-center justify-end w-15'>
-        <button className='p-1' onClick={handleDeleteClick} title='Remove task'>
+        <button className='p-1' onClick={handleDeleteClick} title='Delete Saftie'>
           <TiDelete size='20' className='text-red-600 hover:text-red-700' />
         </button>
       </div>
@@ -317,13 +276,14 @@ function Todo({ id, isDone, description, time }: TodoProps) {
   );
 }
 
+/*
 function TaskTable({ schedule }: { schedule: GeneratedSchedule }) {
   return (
     <div className='flex flex-col gap-6 py-6'>
       <table className='table-auto w-full border-separate border border-spacing-2 rounded-md border-slate-200 shadow-sm'>
         {!!schedule.mainTasks ? (
           schedule.mainTasks
-            .map((mainTask) => <MainTaskTable key={mainTask.name} mainTask={mainTask} subtasks={schedule.subtasks} />)
+            .map((mainTask) => <SaftieTable key={mainTask.name} mainTask={mainTask} />)
             .sort((a, b) => {
               const priorityOrder = ['low', 'medium', 'high'];
               if (a.props.mainTask.priority && b.props.mainTask.priority) {
@@ -339,12 +299,12 @@ function TaskTable({ schedule }: { schedule: GeneratedSchedule }) {
         )}
       </table>
 
-      {/* ))} */}
+      
     </div>
   );
 }
 
-function MainTaskTable({ mainTask, subtasks }: { mainTask: MainTask; subtasks: SubTask[] }) {
+function SaftieTable({ mainTask }: { mainTask: MainTask; }) {
   return (
     <>
       <thead>
@@ -364,6 +324,7 @@ function MainTaskTable({ mainTask, subtasks }: { mainTask: MainTask; subtasks: S
           </th>
         </tr>
       </thead>
+	
       {!!subtasks ? (
         subtasks.map((subtask) => {
           if (subtask.mainTaskName === mainTask.name) {
@@ -390,10 +351,14 @@ function MainTaskTable({ mainTask, subtasks }: { mainTask: MainTask; subtasks: S
       ) : (
         <div className='text-slate-600 text-center'>OpenAI didn't return any Subtasks. Try again.</div>
       )}
+
     </>
   );
 }
 
+*/
+
+/*
 function SubtaskTable({ description, time }: { description: string; time: number }) {
   const [isDone, setIsDone] = useState<boolean>(false);
 
@@ -431,3 +396,4 @@ function SubtaskTable({ description, time }: { description: string; time: number
     </>
   );
 }
+  */

@@ -1,10 +1,9 @@
 import type { Saftie, Task, GptResponse } from 'wasp/entities';
 import type {
   GenerateGptResponse,
-  DeleteTask,
-  UpdateTask,
+  DeleteSaftie,
   GetGptResponses,
-  GetAllTasksByUser,
+  GetAllSaftiesByUser,
   CreateSaftie,
 } from 'wasp/server/operations';
 import { HttpError } from 'wasp/server';
@@ -198,6 +197,7 @@ export const createSaftie: CreateSaftie<Pick<Saftie, 'address' | 'amount'>, Saft
 	return saftie;
 };
 
+/*
 export const updateTask: UpdateTask<Partial<Task>, Task> = async ({ id, isDone, time }, context) => {
   if (!context.user) {
     throw new HttpError(401);
@@ -216,18 +216,20 @@ export const updateTask: UpdateTask<Partial<Task>, Task> = async ({ id, isDone, 
   return task;
 };
 
-export const deleteTask: DeleteTask<Pick<Task, 'id'>, Task> = async ({ id }, context) => {
+*/
+
+export const deleteSaftie: DeleteSaftie<Pick<Saftie, 'id'>, Saftie> = async ({ id }, context) => {
   if (!context.user) {
     throw new HttpError(401);
   }
 
-  const task = await context.entities.Task.delete({
+  const saftie = await context.entities.Saftie.delete({
     where: {
       id,
     },
   });
 
-  return task;
+  return saftie;
 };
 //#endregion
 
@@ -245,11 +247,11 @@ export const getGptResponses: GetGptResponses<void, GptResponse[]> = async (_arg
   });
 };
 
-export const getAllTasksByUser: GetAllTasksByUser<void, Task[]> = async (_args, context) => {
+export const getAllSaftiesByUser: GetAllSaftiesByUser<void, Saftie[]> = async (_args, context) => {
   if (!context.user) {
     throw new HttpError(401);
   }
-  return context.entities.Task.findMany({
+  return context.entities.Saftie.findMany({
     where: {
       user: {
         id: context.user.id,

@@ -157,30 +157,31 @@ action createSaftie {
   entities: [Saftie]
 }
 
+query getAllSaftiesByUser {
+  fn: import { getAllSaftiesByUser } from "@src/saftie-app/operations",
+  entities: [Saftie]
+}
+
+action deleteSaftie {
+  fn: import { deleteSaftie } from "@src/saftie-app/operations",
+  entities: [Saftie]
+}
+
+
 action generateGptResponse {
   fn: import { generateGptResponse } from "@src/saftie-app/operations",
   entities: [User, Task, GptResponse]
 }
 
-action deleteTask {
-  fn: import { deleteTask } from "@src/saftie-app/operations",
-  entities: [Task]
-}
 
-action updateTask {
-  fn: import { updateTask } from "@src/saftie-app/operations",
-  entities: [Task]
-}
+
 
 query getGptResponses {
   fn: import { getGptResponses } from "@src/saftie-app/operations",
   entities: [User, GptResponse]
 }
 
-query getAllTasksByUser {
-  fn: import { getAllTasksByUser } from "@src/saftie-app/operations",
-  entities: [Task]
-}
+
 //#endregion
 
 //#region Payment
