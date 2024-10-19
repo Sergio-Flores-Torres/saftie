@@ -153,6 +153,12 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
 
   return (
     <div className='flex flex-col justify-center gap-10'>
+
+	<ol className='mx-auto mt-6 max-w-2xl text-left text-md leading-8 text-gray-600 dark:text-white'>
+		<li>1. Don't use decimals. To configure 1 USDC, type "1" as the amount.</li>
+		<li>2. Use your wallet address as destination, make sure you have some USDC balance already, since the Saftie won't create the ATA.</li>
+	</ol>
+
       <div className='flex flex-col gap-3'>
 	  {error &&  <p className='mx-auto mt-6 max-w-2xl text-center text-md leading-8 text-red-600 dark:text-white'>{error}</p>}
 	  <div className='flex items-center justify-between gap-3'>
@@ -196,6 +202,7 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
 
       <div className='space-y-10 col-span-full'>
         {isSaftiesLoading && <div>Loading...</div>}
+
         {safties!! && safties.length > 0 ? (
           <div className='space-y-4'>
             {safties.map((saftie: Saftie) => (
@@ -245,10 +252,15 @@ function SaftieList({ id, address, amount }: SaftieListProps) {
     await deleteSaftie({ id });
   };
 
+  const handleCopyClick = async () => {
+    // TODO
+	alert("Not done");
+  };
+
   return (
     <div className='flex items-center justify-between bg-purple-50 rounded-lg border border-gray-200 p-2 w-full'>
 	<div className='flex items-center justify-start w-15'>
-        <button className='p-1' onClick={handleDeleteClick} title='Copy Saftie Link'>
+        <button className='p-1' onClick={handleCopyClick} title='Copy Saftie Link'>
           <TiClipboard size='20' className='text-blue-600 hover:text-blue-700' />
         </button>
       </div>

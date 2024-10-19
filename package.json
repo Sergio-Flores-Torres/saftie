@@ -9,6 +9,8 @@
     "@headlessui/react": "1.7.13",
     "@lemonsqueezy/lemonsqueezy.js": "^3.2.0",
     "@solana/actions": "^1.6.5",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.95.4",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.7",
     "apexcharts": "^3.41.0",
