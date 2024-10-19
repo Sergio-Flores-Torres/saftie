@@ -1,4 +1,4 @@
-# <YOUR_APP_NAME>
+# SAFTIE: Frictionless Solana USDC donation blinks
 
 Built with [Wasp](https://wasp-lang.dev), based on the [Open Saas](https://opensaas.sh) template.
 
@@ -17,4 +17,3 @@ Image by <a href="https://pixabay.com/users/u_da09vqqi2w-37738004/?utm_source=li
 Image by <a href="https://pixabay.com/users/davidrockdesign-2595351/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1837375">David</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1837375">Pixabay</a>
 
 Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1300582">OpenClipart-Vectors</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1300582">Pixabay</a>
-

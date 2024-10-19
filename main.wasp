@@ -337,3 +337,19 @@ job sendNewsletter {
   entities: [User]
 }
 //#endregion
+
+//#region Solana Blink
+
+api getSaftieAction {
+  fn: import { getSaftieAction } from "@src/solana/actions",
+  entities: [Saftie],
+  httpRoute: (GET, "/solana-actions/:id")
+}
+
+api postSaftieAction {
+  fn: import { postSaftieAction } from "@src/solana/actions",
+  entities: [Saftie],
+  httpRoute: (POST, "/solana-actions/:id")
+}
+
+//#endregion
