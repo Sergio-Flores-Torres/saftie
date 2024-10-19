@@ -352,4 +352,8 @@ api postSaftieAction {
   httpRoute: (POST, "/solana-actions/:id")
 }
 
+route BlinkPageRoute { path: "/blink", to: BlinkPage }
+page BlinkPage {
+  component: import BlinkPage from "@src/solana/BlinkPage"
+}
 //#endregion

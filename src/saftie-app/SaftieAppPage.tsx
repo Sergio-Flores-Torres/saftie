@@ -157,6 +157,7 @@ function NewSaftieForm({ handleCreateSaftie }: { handleCreateSaftie: typeof crea
 	<ol className='mx-auto mt-6 max-w-2xl text-left text-md leading-8 text-gray-600 dark:text-white'>
 		<li>1. Don't use decimals. To configure 1 USDC, type "1" as the amount.</li>
 		<li>2. Use your wallet address as destination, make sure you have some USDC balance already, since the Saftie won't create the ATA.</li>
+		<li>3. Click on the left blue copy icon, to get the shareable link you can place on your X, website, etc.</li>
 	</ol>
 
       <div className='flex flex-col gap-3'>
